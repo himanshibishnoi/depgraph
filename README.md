@@ -12,3 +12,6 @@ I wanted hands-on practice applying DSA concepts to something real, rather than 
 
 ## Status
 🚧 In progress — currently building core graph logic.
+
+
+<!-- This line was added on a practice branch to learn Git workflow. -->
