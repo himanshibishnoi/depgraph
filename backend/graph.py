@@ -3,9 +3,19 @@ class Graph:
         self.graph = {}
 
     def add_node(self, node):
+        if node in self.graph:
+            raise ValueError(f"Node '{node}' already exists.")
         self.graph[node] = []
 
     def add_edge(self, from_node, to_node):
+        if from_node not in self.graph:
+            raise ValueError(f"Source node '{from_node}' does not exist.")
+        if to_node not in self.graph:
+            raise ValueError(f"Destination node '{to_node}' does not exist.")
+        if from_node == to_node:
+            raise ValueError(f"Self-loops are not allowed: '{from_node}' -> '{to_node}'.")
+        if to_node in self.graph[from_node]:
+            raise ValueError(f"Edge '{from_node}' -> '{to_node}' already exists.")
         self.graph[from_node].append(to_node)
 
     def print_graph(self):
@@ -53,6 +63,7 @@ class Graph:
                 if dfs(node):
                     return True
         return False
+
     def topological_sort_dfs(self):
         visited = set()
         result = []
@@ -97,4 +108,27 @@ cyclic_graph.add_edge("A", "B")
 cyclic_graph.add_edge("B", "C")
 cyclic_graph.add_edge("C", "A")
 print(cyclic_graph.has_cycle())
+
 print(my_graph.topological_sort_dfs())
+
+print("\n--- Testing input validation ---")
+
+try:
+    my_graph.add_node("Source Code")
+except ValueError as e:
+    print(f"Caught: {e}")
+
+try:
+    my_graph.add_edge("Source Code", "Ghost Node")
+except ValueError as e:
+    print(f"Caught: {e}")
+
+try:
+    my_graph.add_edge("Source Code", "Source Code")
+except ValueError as e:
+    print(f"Caught: {e}")
+
+try:
+    my_graph.add_edge("Source Code", "Object Code")
+except ValueError as e:
+    print(f"Caught: {e}")
