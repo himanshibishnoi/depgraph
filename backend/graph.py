@@ -82,53 +82,53 @@ class Graph:
         return result[::-1]
 
 
-# Test code
-my_graph = Graph()
-my_graph.add_node("Source Code")
-my_graph.add_node("Object Code")
-my_graph.add_node("Linking")
-my_graph.add_node("Compiling")
-my_graph.add_node("Testing")
-my_graph.add_node("Documentation")
-my_graph.add_edge("Source Code", "Object Code")
-my_graph.add_edge("Object Code", "Linking")
-my_graph.add_edge("Linking", "Compiling")
-my_graph.add_edge("Compiling", "Testing")
-my_graph.add_edge("Source Code", "Documentation")
-
-my_graph.print_graph()
-print(my_graph.topological_sort_kahn())
-print(my_graph.has_cycle())
-
-cyclic_graph = Graph()
-cyclic_graph.add_node("A")
-cyclic_graph.add_node("B")
-cyclic_graph.add_node("C")
-cyclic_graph.add_edge("A", "B")
-cyclic_graph.add_edge("B", "C")
-cyclic_graph.add_edge("C", "A")
-print(cyclic_graph.has_cycle())
-
-print(my_graph.topological_sort_dfs())
-
-print("\n--- Testing input validation ---")
-
-try:
+if __name__ == "__main__":
+    my_graph = Graph()
     my_graph.add_node("Source Code")
-except ValueError as e:
-    print(f"Caught: {e}")
-
-try:
-    my_graph.add_edge("Source Code", "Ghost Node")
-except ValueError as e:
-    print(f"Caught: {e}")
-
-try:
-    my_graph.add_edge("Source Code", "Source Code")
-except ValueError as e:
-    print(f"Caught: {e}")
-
-try:
+    my_graph.add_node("Object Code")
+    my_graph.add_node("Linking")
+    my_graph.add_node("Compiling")
+    my_graph.add_node("Testing")
+    my_graph.add_node("Documentation")
     my_graph.add_edge("Source Code", "Object Code")
-except ValueError as e:
-    print(f"Caught: {e}")
+    my_graph.add_edge("Object Code", "Linking")
+    my_graph.add_edge("Linking", "Compiling")
+    my_graph.add_edge("Compiling", "Testing")
+    my_graph.add_edge("Source Code", "Documentation")
+
+    my_graph.print_graph()
+    print(my_graph.topological_sort_kahn())
+    print(my_graph.has_cycle())
+
+    cyclic_graph = Graph()
+    cyclic_graph.add_node("A")
+    cyclic_graph.add_node("B")
+    cyclic_graph.add_node("C")
+    cyclic_graph.add_edge("A", "B")
+    cyclic_graph.add_edge("B", "C")
+    cyclic_graph.add_edge("C", "A")
+    print(cyclic_graph.has_cycle())
+
+    print(my_graph.topological_sort_dfs())
+
+    print("\n--- Testing input validation ---")
+
+    try:
+        my_graph.add_node("Source Code")
+    except ValueError as e:
+        print(f"Caught: {e}")
+
+    try:
+        my_graph.add_edge("Source Code", "Ghost Node")
+    except ValueError as e:
+        print(f"Caught: {e}")
+
+    try:
+        my_graph.add_edge("Source Code", "Source Code")
+    except ValueError as e:
+        print(f"Caught: {e}")
+
+    try:
+        my_graph.add_edge("Source Code", "Object Code")
+    except ValueError as e:
+        print(f"Caught: {e}")
