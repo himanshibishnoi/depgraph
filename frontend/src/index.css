@@ -451,3 +451,28 @@ body.dark .btn-preset {
   background: #0F3460;
   color: var(--text-primary);
 }
+/* ── Mobile responsiveness ── */
+@media (max-width: 768px) {
+  .columns {
+    grid-template-columns: 1fr;
+  }
+
+  .header {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .tagline {
+    width: 100%;
+    text-align: left;
+  }
+
+  .header-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .logo-text {
+    font-size: 1.5rem;
+  }
+}
