@@ -22,6 +22,12 @@ function App() {
   const [edges, setEdges] = useState("")
   const [result, setResult] = useState(null)
   const [loading, setLoading] = useState(false)
+  const [darkMode, setDarkMode] = useState(false)
+
+  const toggleDark = () => {
+    setDarkMode(!darkMode)
+    document.body.classList.toggle("dark")
+  }
 
   const handleSubmit = async () => {
     const parsedNodes = nodes
@@ -89,6 +95,9 @@ function App() {
           <button className="btn-clear" onClick={handleClear}>
             Clear All
           </button>
+          <button className="btn-theme" onClick={toggleDark}>
+            {darkMode ? "☀️" : "🌙"}
+          </button>
         </div>
       </header>
 
@@ -118,7 +127,7 @@ function App() {
             <span className="step-number">2</span>
             <h2>Add dependencies</h2>
           </div>
-          <p className="step-hint">{"Define each dependency as: Task A -> Task B"}</p>
+          <p className="step-hint">{"One dependency per line: A -> B"}</p>
           <textarea
             className="input-area"
             value={edges}
