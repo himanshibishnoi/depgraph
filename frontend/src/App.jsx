@@ -1,7 +1,6 @@
 import { useState } from "react"
 import "./index.css"
 
-// ── Example presets ──────────────────────────────────────
 const EXAMPLES = {
   "Morning Routine": {
     nodes: "Wake up\nExercise\nShower\nBreakfast\nStart work",
@@ -23,6 +22,7 @@ function App() {
   const [result, setResult] = useState(null)
   const [loading, setLoading] = useState(false)
   const [darkMode, setDarkMode] = useState(false)
+  const [copied, setCopied] = useState(false)
 
   const toggleDark = () => {
     setDarkMode(!darkMode)
@@ -47,7 +47,7 @@ function App() {
 
     setLoading(true)
     try {
-      const response = await fetch("http://localhost:5001/resolve", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/resolve`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ nodes: parsedNodes, edges: parsedEdges }),
@@ -65,17 +65,21 @@ function App() {
     setNodes("")
     setEdges("")
     setResult(null)
+    setCopied(false)
   }
 
   const loadExample = (name) => {
     setNodes(EXAMPLES[name].nodes)
     setEdges(EXAMPLES[name].edges)
     setResult(null)
+    setCopied(false)
   }
 
   const copyOrder = () => {
     if (result?.order) {
       navigator.clipboard.writeText(result.order.join("\n"))
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
     }
   }
 
@@ -89,7 +93,9 @@ function App() {
         </div>
         <p className="tagline">Plan your tasks. Respect the dependencies.</p>
         <div className="header-actions">
-          <button className="btn-examples" onClick={() => {}}>
+          <button className="btn-examples" onClick={() => {
+            document.querySelector('.examples-row').scrollIntoView({ behavior: 'smooth' })
+          }}>
             ✦ Examples
           </button>
           <button className="btn-clear" onClick={handleClear}>
@@ -175,7 +181,7 @@ function App() {
                 ))}
               </ol>
               <button className="btn-copy" onClick={copyOrder}>
-                📋 Copy Order
+                {copied ? "✓ Copied!" : "📋 Copy Order"}
               </button>
             </>
           )}
