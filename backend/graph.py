@@ -45,24 +45,32 @@ class Graph:
     def has_cycle(self):
         visited = set()
         in_stack = set()
+        cycle_nodes = []
 
-        def dfs(node):
+        def dfs(node, path):
             visited.add(node)
             in_stack.add(node)
+            path.append(node)
+
             for neighbor in self.graph[node]:
                 if neighbor in in_stack:
+                    cycle_start = path.index(neighbor)
+                    cycle_nodes.extend(path[cycle_start:])
                     return True
                 if neighbor not in visited:
-                    if dfs(neighbor):
+                    if dfs(neighbor, path):
                         return True
+
             in_stack.remove(node)
+            path.pop()
             return False
 
         for node in self.graph:
             if node not in visited:
-                if dfs(node):
-                    return True
-        return False
+                if dfs(node, []):
+                    return True, cycle_nodes
+
+        return False, []
 
     def topological_sort_dfs(self):
         visited = set()
