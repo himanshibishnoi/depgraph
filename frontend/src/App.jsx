@@ -164,9 +164,19 @@ function App() {
         {/* ── Column 2: Result ── */}
         <div className="card">
           <h2 className="col-title">Resolved order</h2>
-          {!result && (
-            <p className="empty-state">Your resolved order will appear here.</p>
-          )}
+          {!result && !loading && (
+  <p className="empty-state">Your resolved order will appear here.</p>
+)}
+{loading && (
+  <div className="skeleton-list">
+    {[70, 50, 85, 60, 75].map((width, i) => (
+      <div key={i} className="skeleton-item">
+        <div className="skeleton-circle" />
+        <div className="skeleton-line" style={{ width: `${width}%` }} />
+      </div>
+    ))}
+  </div>
+)}
           {result && result.status === "success" && (
             <>
               <div className="status-badge success">
