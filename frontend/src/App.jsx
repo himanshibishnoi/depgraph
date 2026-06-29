@@ -1,6 +1,12 @@
+// App.jsx
+// Main React component for depgraph
+// Handles all user interaction, API calls, and rendering
+// Three sections: Input (left), Resolved Order (middle), Dependency Chain (right)
 import { useState } from "react"
 import "./index.css"
-
+// ── Preset example data ──────────────────────────────────
+// Pre-filled graphs users can load with one click
+// Stored as { nodes: string, edges: string } matching textarea format
 const EXAMPLES = {
   "Morning Routine": {
     nodes: "Wake up\nExercise\nShower\nBreakfast\nStart work",
@@ -15,7 +21,7 @@ const EXAMPLES = {
     edges: "Arrays->Linked Lists\nLinked Lists->Stacks\nLinked Lists->Queues\nStacks->Trees\nQueues->Trees\nTrees->Graphs"
   }
 }
-
+// ── Main component ───────────────────────────────────────
 function App() {
   const [nodes, setNodes] = useState("")
   const [edges, setEdges] = useState("")
@@ -23,12 +29,13 @@ function App() {
   const [loading, setLoading] = useState(false)
   const [darkMode, setDarkMode] = useState(false)
   const [copied, setCopied] = useState(false)
-
+// State — one variable per piece of data the UI needs to track
   const toggleDark = () => {
     setDarkMode(!darkMode)
     document.body.classList.toggle("dark")
   }
-
+// ── Core logic ───────────────────────────────────────────
+// Parse user input → call API → update result state
   const handleSubmit = async () => {
     const parsedNodes = nodes
       .split("\n")
@@ -60,7 +67,7 @@ function App() {
       setLoading(false)
     }
   }
-
+// ── Utility handlers ─────────────────────────────────────
   const handleClear = () => {
     setNodes("")
     setEdges("")
@@ -82,7 +89,7 @@ function App() {
       setTimeout(() => setCopied(false), 2000)
     }
   }
-
+// ── Render ───────────────────────────────────────────────
   return (
     <div className="app">
       {/* ── Header ── */}
