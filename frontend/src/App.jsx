@@ -4,7 +4,8 @@
 // Three sections: Input (left), Resolved Order (middle), Dependency Chain (right)
 import { useState } from "react"
 import "./index.css"
-// ── Preset example data ──────────────────────────────────
+import successIcon from './assets/success-icon.png'
+import successIconDark from './assets/success-icon-dark.png'// ── Preset example data ──────────────────────────────────
 // Pre-filled graphs users can load with one click
 // Stored as { nodes: string, edges: string } matching textarea format
 const EXAMPLES = {
@@ -172,7 +173,11 @@ function App() {
         <div className="card">
           <h2 className="col-title">Resolved order</h2>
           {!result && !loading && (
-  <p className="empty-state">Your resolved order will appear here.</p>
+  <div className="empty-illustration">
+    <img src={successIcon} className="empty-icon-large empty-icon-light" alt="" />
+    <img src={successIconDark} className="empty-icon-large empty-icon-dark" alt="" />
+    <p className="empty-state">Your resolved order will appear here.</p>
+  </div>
 )}
 {loading && (
   <div className="skeleton-list">
@@ -214,17 +219,17 @@ function App() {
           <h2 className="col-title">Dependency chain</h2>
           <p className="step-hint">Each task depends on the ones before it.</p>
           {!result && (
-            <div className="chain-empty">
-              <div className="chain-placeholder">
-                <span className="chain-circle" />
-                <span className="chain-arrow">{"→"}</span>
-                <span className="chain-circle" />
-                <span className="chain-arrow">{"→"}</span>
-                <span className="chain-circle" />
-              </div>
-              <p>Resolve your tasks to visualize dependencies.</p>
-            </div>
-          )}
+  <div className="empty-illustration">
+    <div className="chain-placeholder">
+      <span className="chain-circle" />
+      <span className="chain-arrow">{"→"}</span>
+      <span className="chain-circle" />
+      <span className="chain-arrow">{"→"}</span>
+      <span className="chain-circle" />
+    </div>
+    <p>Resolve your tasks to visualize dependencies.</p>
+  </div>
+)}
           {result && result.status === "success" && (
             <ul className="chain-list">
               {edges
